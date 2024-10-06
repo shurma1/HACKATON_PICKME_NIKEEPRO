@@ -63,11 +63,11 @@ class AnalysisService {
 								const rangeStart = RESOURCE_QUALITY[i];
 								const rangeEnd = RESOURCE_QUALITY[i + 1];
 								const rangeFraction = (yaIndex - rangeStart) / (rangeEnd - rangeStart);
-								trustСoeff = calcPercentBetween(1, (i + rangeFraction) / (RESOURCE_QUALITY.length - 1), resourceQuality);
+								trustСoeff = (i + rangeFraction) / (RESOURCE_QUALITY.length - 1); //todo: resourceQuality
 								break;
 							}
 						}
-
+						
 						if (yaIndex >= RESOURCE_QUALITY[RESOURCE_QUALITY.length - 1]) {
 							trustСoeff = 1;
 						}
