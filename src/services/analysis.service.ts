@@ -8,7 +8,6 @@ import SearchService from "./search.service";
 import {ISentenceWithAnalysis} from "../types/ISentenceWithAnalysis";
 import {IRelevances} from "../types/IRelevances";
 import {extractJsonContent} from "../utils/extractJsonContent";
-import quality from "../model/databaseModels/Quality";
 import {
 	BLACK_LIST_COEFF, MIN_RELEVANCE_AVAILABLE,
 	MIN_RESOURCE_QUALITY,
@@ -16,11 +15,11 @@ import {
 	RESOURCE_QUALITY, RESULTS_MAY_DELETE,
 	WHITE_LIST_COEFF
 } from "../constants/constants";
-import {BOOLEAN} from "sequelize";
 import TrustService from "./trust.service";
 import {IResource} from "../types/IResource";
-import * as trace_events from "node:trace_events";
-import {trustList} from "../constants/trustList";
+import {BOOLEAN} from "sequelize";
+import {calcPercentBetween} from "../utils/calcPercentBetween";
+import {IDeepTextAnalyse} from "../types/IDeepTextAnalyse";
 
 
 
@@ -37,14 +36,14 @@ class AnalysisService {
 	public async RelevanceOfSearchResults(query: string, results: string[]): Promise<IRelevances> {
 		try {
 			const answer = await OpenaiService.GenerateGPT4oMini(resultRelevancePromt + `{query: ${query}, results: [${results.join(', ')}]`);
-			console.log('relewance: ', answer)
+			
 			return JSON.parse(extractJsonContent(answer) as string);
 		} catch (error) {
 			throw error;
 		}
 	}
 	
-	public async DeepTextAnalysis(text: string, trust: number, logic: number, resourceQuality: number): Promise<IRelevances> {
+	public async DeepTextAnalysis(text: string, trust: number, logic: number, resourceQuality: number): Promise<IDeepTextAnalyse> {
 		try{
 			const essence = await this.TextToEssence(text);
 			
@@ -57,15 +56,14 @@ class AnalysisService {
 					resources: await Promise.all(searchResult.items.map(async item => {
 						
 						let trustСoeff = 0;
-						const yaIndex = await SearchService.GetWebQualityIndex(item.displayLink);
+						let yaIndex = await SearchService.GetWebQualityIndex(item.displayLink);
 						
-						/// todo: add resourceQuality
 						for (let i = 0; i < RESOURCE_QUALITY.length - 1; i++) {
 							if (yaIndex >= RESOURCE_QUALITY[i] && yaIndex < RESOURCE_QUALITY[i + 1]) {
 								const rangeStart = RESOURCE_QUALITY[i];
 								const rangeEnd = RESOURCE_QUALITY[i + 1];
 								const rangeFraction = (yaIndex - rangeStart) / (rangeEnd - rangeStart);
-								trustСoeff = (i + rangeFraction) / (RESOURCE_QUALITY.length - 1);
+								trustСoeff = calcPercentBetween(1, (i + rangeFraction) / (RESOURCE_QUALITY.length - 1), resourceQuality);
 								break;
 							}
 						}
@@ -130,7 +128,7 @@ class AnalysisService {
 					}
 				})
 				relevanceCoeff /= resourcesCount;
-				sentence.resources.filter(item => item !== null);
+				sentence.resources = sentence.resources.filter(BOOLEAN);
 				
 				const resourceCountAfterFilter = sentence.resources.length;
 				
@@ -148,19 +146,15 @@ class AnalysisService {
 				}, 0) / badResources.length
 					: 0;
 				
-				console.log(
-					`Адекватность ии: ${sentenceWithAnalysis[i].chance},
-					Среднее значение источников: ${middleTrustResourceIndex},
-					Релевантность1: ${(resourceFilteredCoeff > RESULTS_MAY_DELETE ? 0.8 : 1 )},
-					Релевантность2: ${relevanceCoeff < MIN_RELEVANCE_AVAILABLE ? 0.8 : 1}
-					`
-				)
-				
+				sentenceWithAnalysis[i].chance = calcPercentBetween(sentenceWithAnalysis[i].chance, 1, logic);
 				sentenceWithAnalysis[i].chance *= middleTrustResourceIndex * (resourceFilteredCoeff > RESULTS_MAY_DELETE ? 0.8 : 1 ) * (relevanceCoeff < MIN_RELEVANCE_AVAILABLE ? 0.8 : 1 )
 			}
 			
-			//@ts-ignore
-			return sentenceWithAnalysis;
+			return {
+				text,
+				trustСoeff: sentenceWithAnalysis.reduce((total, sentence) => total += sentence.chance, 0) / sentenceWithAnalysis.length,
+				sentences: sentenceWithAnalysis
+			};
 			
 		}
 		catch (error) {
