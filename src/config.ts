@@ -9,3 +9,5 @@ export const API_ANALYSIS_PARAMS = {
 	resourceQuality: 0.5,
 	logic: 1
 }
+
+export const API_URL = 'localhost:8000/api';
