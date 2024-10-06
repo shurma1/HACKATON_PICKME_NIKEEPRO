@@ -1,0 +1,25 @@
+{
+  "server": {
+    "PORT": 8080,
+    "HOST": "localhost",
+    "SECURE": false
+  },
+  "database": {
+    "NAME": "store",
+    "USER": "postgres",
+    "PASSWORD": "root",
+    "HOST": "localhost",
+    "PORT": 5432,
+    "LOGGING": false
+  },
+  "logging": {
+    "level": 5
+  },
+  "openai_api_key": "<OPENAI API_KEY>",
+  "google": {
+    "api_key": "<GOOGLE SEARCH API KEY see: https://developers.google.com/custom-search/v1/introduction>",
+    "cx": "<GOOGLE ENGINE cx_id see: https://cse.google.com/all>"
+  },
+  "use_proxy": true,
+  "socks_config": "<SOCKS PROXY SETTING_LINK>"
+}
