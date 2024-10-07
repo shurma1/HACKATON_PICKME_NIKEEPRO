@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Extension</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      width: 350px;
+      height: 400px;
+      margin: 0;
+      color: rgba(0, 0, 0, 0);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: url('assets/123.webp') no-repeat center center/cover; /* Фоновое изображение */
+      background-position: -39px -13px;
+      background-size: calc(445px);
+      font-family: Arial, sans-serif;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5); /* Затемнение */
+      z-index: 0;
+    }
+
+    .gradient-border::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle, rgba(189, 189, 189, 0) 70%, rgba(117, 117, 117, 0.6) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .gradient-border-content {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+      text-align: center;
+      color: #E0E0E0; /* Светло-серый текст */
+    }
+
+    button {
+      width: 100%;
+      height: 55px;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.1); /* Полупрозрачный белый фон для кнопок */
+      border: 1px solid #BDBDBD; /* Серый контур */
+      border-radius: 20px; /* Закругленные края */
+      color: white;
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: rgba(255, 255, 255, 0.2); /* Более яркий цвет при наведении */
+    }
+
+    h1 {
+      color: white;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 22px;
+    }
+
+    a {
+      display: block;
+      color: #BDBDBD;
+      text-decoration: none;
+      margin-top: 30px;
+      font-size: 14px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .circular-progress {
+      position: relative;
+      width: 155px;
+      height: 155px;
+      margin-bottom: 20px; /* Отступ между кругом и текстом */
+    }
+
+    svg {
+      transform: rotate(-90deg); /* Поворачиваем круг на 90 градусов, чтобы прогресс начинался сверху */
+    }
+
+    .circle-background {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.1);
+      stroke-width: 10;
+    }
+
+    .circle-progress {
+      fill: none;
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke: rgb(255, 0, 0); /* Начальный цвет прогресса */
+      transition: stroke 0.3s ease;
+    }
+
+    .percentage-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      color: white;
+    }
+
+    .description {
+      margin-top: 10px;
+      font-size: 20px;
+      color: white;
+    }
+
+    button.loading {
+      background-color: #555;
+      color: #fff;
+      cursor: progress;
+    }
+
+    button.success {
+      background-color: #28a745;
+      color: #fff;
+    }
+
+    button.warning {
+      background-color: #ffc107;
+      color: #fff;
+    }
+
+    button.error {
+      background-color: #dc3545;
+      color: #fff;
+    }
+
+    .manrope-ds{
+      font-family: "Manrope", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 800;
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+  <div class="gradient-border">
+    <div class="gradient-border-content">
+      <!-- popup.html -->
+      <h1 class="manrope-ds">DeFacto</h1>
+
+      <div class="container">
+        <div class="circular-progress">
+          <svg width="150" height="150" viewBox="0 0 100 100">
+            <!-- Фон круга -->
+            <circle class="circle-background" cx="50" cy="50" r="45"></circle>
+            <!-- Прогресс обводки -->
+            <circle class="circle-progress" cx="50" cy="50" r="45" stroke-dasharray="283" stroke-dashoffset="283"></circle>
+          </svg>
+          <span class="percentage-text" id="percentageText">0%</span>
+        </div>
+    </div>
+
+    <button id="getTextButton">Получить выделенный текст</button>
+    <script src="popup.js"></script>
+
+    <a target="_blank" href="index.html">О расширении</a>
+
+  </div>
+
+  <!-- Подключение скрипта -->
+  <script src="popup.js"></script>
+</body>
+</html>

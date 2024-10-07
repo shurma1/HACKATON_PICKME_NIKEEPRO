@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/icon128.png" type="image/x-icon">
+    <title>Добро пожаловать в расширение</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #00ff22;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        section {
+
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.377);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: #000000;
+            font-size: 34px;
+        }
+
+        p {
+            color: #f7f7f7;
+            font-size: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #00ff22;
+            color: white;
+            position: relative;
+            width: 100%;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            font-size: 20px;
+
+            color: #3e0f80;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            text-decoration:   underline;
+
+        }
+
+        a:hover {
+            color: #3700b3;
+            font-size: 21px;
+
+        }
+
+        .developer-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .developer-info div {
+            width: 30%;
+            margin-bottom: 20px;
+        }
+
+        .links ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .links li {
+            margin: 10px 0;
+        }
+
+        .links li a {
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .developer-info div {
+                width: 100%;
+            }
+        }
+        html{
+            font-family: "Manrope", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 450;
+            font-style: normal;
+        }
+        body{
+        background-color: #202020;}
+    </style>
+</head>
+<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <header>
+        <h1>Добро пожаловать в наше расширение!</h1>
+        <p>Ваш инструмент для проверки достоверности информации в интернете</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>О расширении</h2>
+            <p>Это расширение поможет вам находить дезинформацию и проверять правдивость фактов в режиме реального времени, анализируя страницы и сравнивая их с другими источниками. Убедитесь, что информация, которую вы читаете, надежна.</p>
+        </section>
+
+        <section class="developer-info">
+            <div>
+                <h2>Разработчики</h2>
+                <p><strong></strong> Белевцев Георгий</p>
+                <p><strong></strong> Ерохина Софья</p>
+                <p><strong></strong> Затирахин Денис</p>
+                <p><strong></strong> Лелявин Данила</p>
+                <p><strong></strong> Прохоров Дмитрий</p>
+                <p><strong></strong> Селезнев Егор</p>
+                <p><strong></strong> Якушев Виктор</p>
+            </div>
+            <div>
+                <p>Фоточки</p>
+            </div>
+            <div>
+                <h2>Контакты</h2>
+                <p>Email: <a href="mailto:support@extension.ru">support@extension.ru</a></p>
+                <p>Телефон: +7 (995) 442-18-17</p>
+            </div>
+        </section>
+
+        <section class="links">
+            <h2>Полезные ссылки</h2>
+            <ul>
+                <li><a href="#">Документация</a></li>
+                <li><a href="https://github.com/iwemrn/Hackathon2024">Репозиторий GitHub</a></li>
+                <li><a href="#">Поддержка</a></li>
+                <li><a href="#">Часто задаваемые вопросы (FAQ)</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 DeFacto. Все права защищены.</p>
+    </footer>
+
+</body>
+</html>
