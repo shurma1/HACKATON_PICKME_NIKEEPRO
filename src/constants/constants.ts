@@ -6,3 +6,5 @@ export const RESOURCE_QUALITY = [0, 500, 1000, 2000, 50000] //0, 0.25, 0.5, 0.75
 export const MIN_RESOURCE_QUALITY = 0.5;
 export const RESULTS_MAY_DELETE = 4;
 export const MIN_RELEVANCE_AVAILABLE = 0.5;
+
+export const MAX_INPUT_TEXT_LENGTH = 350;

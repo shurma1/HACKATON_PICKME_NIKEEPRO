@@ -9,6 +9,16 @@ export const errors = {
 	description: 'Поле text должно иметь тип string.',
 	code: 400
   },
+  INVALID_PARAM_TYPE: {
+	name: 'INVALID_PARAM_TYPE',
+	description: 'Поля trust, resourceQuality, logic принимают занчения от 0.0f до 1.0f',
+	code: 400
+  },
+  INVALID_INPUT_TEXT_LENGTH: {
+	name: 'INVALID_INPUT_TEXT_LENGTH',
+	description: 'Текст не должен быть длинее 350 символов',
+	code: 400
+  },
 }
 
 

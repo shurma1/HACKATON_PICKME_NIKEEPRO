@@ -11,7 +11,6 @@ import {getLocalIp} from './utils/getLocalIp';
 import * as http from 'node:http';
 import {Logger} from './utils/logger';
 import Router from './router';
-import TrustService from "./services/trust.service";
 
 
 initEnv();

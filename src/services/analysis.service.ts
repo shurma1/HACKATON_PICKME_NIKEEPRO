@@ -46,7 +46,7 @@ class AnalysisService {
 	public async DeepTextAnalysis(text: string, trust: number, logic: number, resourceQuality: number): Promise<IDeepTextAnalyse> {
 		try{
 			const essence = await this.TextToEssence(text);
-			
+			console.log('params', trust, logic, resourceQuality)
 			const sentenceWithAnalysis = await Promise.all(essence.sentences.map(async sentence => {
 				const searchResult = await SearchService.Search(sentence.brief);
 				
@@ -57,7 +57,7 @@ class AnalysisService {
 						
 						let trustСoeff = 0;
 						let yaIndex = await SearchService.GetWebQualityIndex(item.displayLink);
-						
+						console.log('ya index', yaIndex, item.displayLink)
 						for (let i = 0; i < RESOURCE_QUALITY.length - 1; i++) {
 							if (yaIndex >= RESOURCE_QUALITY[i] && yaIndex < RESOURCE_QUALITY[i + 1]) {
 								const rangeStart = RESOURCE_QUALITY[i];
@@ -117,7 +117,7 @@ class AnalysisService {
 						//@ts-ignore
 						sentence.resources[i] = null;
 					}
-					console.log(sentence.resources[i])
+					
 					if(sentence.resources[i] !== null) {
 						if(sentence.resources[i].trustСoeff > MIN_RESOURCE_QUALITY) {
 							trustResources.push(sentence.resources[i]);
@@ -145,11 +145,11 @@ class AnalysisService {
 					return total + item.trustСoeff;
 				}, 0) / badResources.length
 					: 0;
-				
+				console.log(sentenceWithAnalysis[i].chance)
 				sentenceWithAnalysis[i].chance = calcPercentBetween(sentenceWithAnalysis[i].chance, 1, logic);
+				console.log(sentenceWithAnalysis[i].chance, middleTrustResourceIndex, resourceFilteredCoeff, relevanceCoeff)
 				sentenceWithAnalysis[i].chance *= middleTrustResourceIndex * (resourceFilteredCoeff > RESULTS_MAY_DELETE ? 0.8 : 1 ) * (relevanceCoeff < MIN_RELEVANCE_AVAILABLE ? 0.8 : 1 )
 			}
-			
 			return {
 				text,
 				trustСoeff: sentenceWithAnalysis.reduce((total, sentence) => total += sentence.chance, 0) / sentenceWithAnalysis.length,
