@@ -4,12 +4,17 @@ import {IDeepTextAnalyse} from "../types/IDeepTextAnalyse";
 
 export default class CheckTextService {
 	static async Check(text: string): Promise<IDeepTextAnalyse> {
-		return await axios.post(
+		const answer =  await axios.post(
 			API_URL + '/reliability/check',
 			{
 				text,
 				...API_ANALYSIS_PARAMS
 			}
 		)
+		
+		if(answer.status !== 200) {
+			throw new Error();
+		}
+		return answer.data;
 	}
 }
